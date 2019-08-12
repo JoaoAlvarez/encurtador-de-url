@@ -12,7 +12,7 @@ rota de insert = "/" usando metodo POST: deverá ser enviar um Json no corpo da 
 exemplo: {"url": "http://facebook.com.br"}
 
 rota de redirecionamento = "/" usando metodo GET : devera ser enviado o codigo referencia da url encurtada.
-exemplo : localhost:8080/Y6WhrOsXCjfv7HyB
+exemplo : http://localhost:8080/Y6WhrOsXCjfv7HyB
 
 rota de statísticas de acessos = "/historico" : devera ser enviado o codigo referencia da url encurtada.
 exemplo : http://localhost:8080/historico/Y6WhrOsXCjfv7HyB
