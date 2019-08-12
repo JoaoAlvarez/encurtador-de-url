@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.encurtadorurl.domain.Acesso;
 import com.encurtadorurl.repositories.AcessoRepository;
-import com.encurtadorurl.resources.utils.IDConverter;
 import com.encurtadorurl.services.exceptions.ObjectNotFoundException;
+import com.encurtadorurl.services.utils.IDConverter;
+import com.encurtadorurl.utils.Constantes;
 
 @Service
 public class AcessoService {
@@ -28,7 +29,7 @@ public class AcessoService {
 				obj.setReferencia(converter.toBase62(String.valueOf(obj.getId())));
 			}catch(NumberFormatException e) {
 				repository.delete(obj);
-				throw new NumberFormatException("Erro ao tentar encurtar URL:"+obj.getUrl());
+				throw new NumberFormatException(Constantes.Error.ERRO_AO_ENCURTUAR_URL.getMessage() + obj.getUrl());
 			}
 			acesso = repository.save(obj); 
 		}
@@ -38,6 +39,10 @@ public class AcessoService {
 	
 	public Acesso findByShortURL(String refURL) {
 		Optional<Acesso> obj = repository.findByReferencia(refURL);
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Nenhum link encontrado com a referencia " + refURL));
+		if(obj.isPresent()) {
+			obj.get().setQuantidadeAcessos(obj.get().getQuantidadeAcessos()+1);
+			repository.save(obj.get());
+		}
+		return obj.orElseThrow(() -> new ObjectNotFoundException(Constantes.Error.REFERENCIA_NAO_ENCONTRADA.getMessage() + refURL));
 	}
 }

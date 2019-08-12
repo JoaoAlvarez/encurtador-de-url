@@ -1,12 +1,14 @@
-package com.encurtadorurl.resources.utils;
+package com.encurtadorurl.services.utils;
 
 import java.math.BigInteger;
 
 //PARA OTIMIZAR O TEMPO E NÃO "REESCREVER A RODA" PESQUISEI UM CODIGO LIMPO, ROBUSTO E QUE FOSSE DE MESMO OBJETIVO
 //FONTE DO CODIGO : https://github.com/tyronedamasceno/URLShortener/blob/master/src/main/java/com/example/demo/IDConverter.java
 
-/*OBS.:FORAM FEITAS ALTERACOES PARA SER COMPATIVEL COM O ID USADO PELO MONGODB
- * Foi necessario utilizar BigInteger no ao invez de Integer/int
+/* OBS1.: TRECHOS DE CODIGOS FORAM REMOVIDOS POR NÃO SEREM UTILIZADOS NESSE PROJETO
+ * OBS2.: FORAM FEITAS ALTERACOES PARA SER COMPATIVEL COM O ID USADO PELO MONGODB 
+ * 		Foi necessario utilizar BigInteger no ao invez de Integer/int, com isso,
+ * 		 os calculos e comparacoes de valores tambem foram alterados.
 */
 
 public class IDConverter {
@@ -28,16 +30,14 @@ public class IDConverter {
 	
 	public String toBase62(String input) {
 		
-		//Integer inputValue = Integer.parseInt(input,16);//Integer.valueOf(input);
 		BigInteger bigInt = new BigInteger(input, 16);
 		if (bigInt.compareTo(BigInteger.ZERO) == 0) return "0";
 		String output = "";
 		while (bigInt.compareTo(BigInteger.ZERO) > 0) {
-			//int remain = inputValue % BASE;
 			BigInteger base = BigInteger.valueOf(BASE);
 			BigInteger remain = bigInt.remainder(base);
+			
 			output += baseCharacters.charAt(Integer.parseInt(remain.toString()));
-			//inputValue /= BASE;
 			bigInt = bigInt.divide(BigInteger.valueOf(BASE));
 		}
 		
@@ -46,14 +46,6 @@ public class IDConverter {
 		}
 		
 		return output;
-	}
-	
-	public String toBase10(String input) {
-		Integer aux = 0;
-		for (int i = input.length() - 1, exp = 0; i >= 0; i--, exp++) {
-			aux += (int)(Math.pow(62, exp) * baseCharacters.indexOf(input.charAt(i)));
-		}
-		return String.valueOf(aux);
 	}
 	
 	private void initialize() {

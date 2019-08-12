@@ -2,6 +2,8 @@ package com.encurtadorurl.resources;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +24,7 @@ public class AcessoResource {
 	private AcessoService service;
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<String> insert(@RequestBody Acesso obj){
+	public ResponseEntity<String> insert(@Valid @RequestBody Acesso obj){
 		String referenciaURL = service.insert(obj); 
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{URLReduzida}").buildAndExpand(referenciaURL).toUri();
 		

@@ -2,9 +2,14 @@ package com.encurtadorurl.domain;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.encurtadorurl.resources.validation.AcessoInsert;
+
+@AcessoInsert
 @Document(collection="acesso")
 public class Acesso implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -12,6 +17,7 @@ public class Acesso implements Serializable{
 	@Id
 	private String id;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String url;
 	
 	private String referencia;
