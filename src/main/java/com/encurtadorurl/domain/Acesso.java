@@ -22,16 +22,13 @@ public class Acesso implements Serializable{
 	
 	private String referencia;
 	
-	private int quantidadeAcessos;
-	
 	public Acesso() {}
 
-	public Acesso(String id, String url, String referencia, int quantidadeAcessos) {
+	public Acesso(String id, String url, String referencia) {
 		super();
 		this.id = id;
 		this.url = url;
 		this.referencia = referencia;
-		this.quantidadeAcessos = quantidadeAcessos;
 	}
 
 	public String getId() {
@@ -56,14 +53,6 @@ public class Acesso implements Serializable{
 
 	public void setReferencia(String referencia) {
 		this.referencia = referencia;
-	}
-
-	public int getQuantidadeAcessos() {
-		return quantidadeAcessos;
-	}
-
-	public void setQuantidadeAcessos(int quantidadeAcessos) {
-		this.quantidadeAcessos = quantidadeAcessos;
 	}
 
 	@Override

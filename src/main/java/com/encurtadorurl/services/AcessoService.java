@@ -15,34 +15,39 @@ import com.encurtadorurl.utils.Constantes;
 public class AcessoService {
 	
 	@Autowired
-	private AcessoRepository repository;
+	private AcessoRepository acessoRepository;
+	
+	@Autowired
+	private HistoricoAcessoService historicoService;
 	
 	private IDConverter converter = IDConverter.getInstance();
 	
 	public String insert(Acesso obj) {
-		Acesso acesso = repository.findByUrl(obj.getUrl());
+		Acesso acesso = acessoRepository.findByUrl(obj.getUrl());
 		if(acesso == null) {
 			obj.setId(null);
-			obj = repository.save(obj);
+			obj = acessoRepository.save(obj);
 			
 			try {
 				obj.setReferencia(converter.toBase62(String.valueOf(obj.getId())));
 			}catch(NumberFormatException e) {
-				repository.delete(obj);
+				acessoRepository.delete(obj);
 				throw new NumberFormatException(Constantes.Error.ERRO_AO_ENCURTUAR_URL.getMessage() + obj.getUrl());
 			}
-			acesso = repository.save(obj); 
+			acesso = acessoRepository.save(obj); 
 		}
 		
 		return acesso.getReferencia();
 	}
 	
 	public Acesso findByShortURL(String refURL) {
-		Optional<Acesso> obj = repository.findByReferencia(refURL);
-		if(obj.isPresent()) {
-			obj.get().setQuantidadeAcessos(obj.get().getQuantidadeAcessos()+1);
-			repository.save(obj.get());
-		}
+		Optional<Acesso> obj = acessoRepository.findByReferencia(refURL);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(Constantes.Error.REFERENCIA_NAO_ENCONTRADA.getMessage() + refURL));
+	}
+	
+	public Acesso findURL(String refURL) {
+		Acesso obj = findByShortURL(refURL);
+		historicoService.insert(obj);
+		return obj;
 	}
 }

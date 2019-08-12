@@ -20,9 +20,9 @@ public class Instantiation implements CommandLineRunner{
 		
 		repository.deleteAll();
 		
-		Acesso ac1 = new Acesso(null, "http://fb.com.br","fb",0);
-		Acesso ac2 = new Acesso(null, "http://google.com.br","goo",20);
-		Acesso ac3 = new Acesso(null, "https://g1.globo.com/","g1",12);
+		Acesso ac1 = new Acesso(null, "http://facebook.com.br","fb");
+		Acesso ac2 = new Acesso(null, "http://google.com.br","goo");
+		Acesso ac3 = new Acesso(null, "https://g1.globo.com/","g1");
 		
 		repository.saveAll(Arrays.asList(ac1,ac2,ac3));
 		

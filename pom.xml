@@ -38,7 +38,8 @@
 		
 		<!-- Pretendia usar a API do google mas preferi fazer algo mais simples 
 			<dependency> <groupId>com.google.apis</groupId> <artifactId>google-api-services-urlshortener</artifactId> 
-			<version>v1-rev57-1.25.0</version> </dependency> -->
+			<version>v1-rev57-1.25.0</version> 
+			</dependency> -->
 
 	</dependencies>
 
